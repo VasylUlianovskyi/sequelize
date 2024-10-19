@@ -8,7 +8,18 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate (models) {
-      // define association here
+      User.belongsTo(models.Group, {
+        foreignKey: {
+          name: 'groupId',
+          //allowNull: false
+        },
+        onUpdate: 'CASCADE', // sync
+        onDelete: 'RESTRICT', // sync
+      });
+      User.belongsToMany(models.Subject, {
+        through: 'StudentSubjects',
+        foreignKey: 'userId',
+      });
     }
   }
   User.init(
