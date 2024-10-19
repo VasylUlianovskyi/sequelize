@@ -1,5 +1,11 @@
 const { Op } = require('sequelize');
-const { sequelize, User, Group } = require('./models');
+const {
+  sequelize,
+  User,
+  Group,
+  Subject,
+  StunentSubjects,
+} = require('./models');
 
 // sequelize
 //   .sync({ force: true })
@@ -150,74 +156,126 @@ const { sequelize, User, Group } = require('./models');
 
 // Associations
 
+// (async function () {
+//   // const group1 = { title: 'gr1', enteredAt: 2023 };
+//   // const group2 = { title: 'gr2', enteredAt: 2024 };
+//   // const createdGroup1 = await Group.create(group1); // model instance
+//   // const createdGroup2 = await Group.create(group2);
+//   // const user1 = {
+//   //   firstName: 'Ivoa',
+//   //   lastName: 'Ivovycha',
+//   //   email: 'mail1@mail.com',
+//   //   birthday: '2002-09-21',
+//   //   isMale: false,
+//   //   activitiesCount: 0,
+//   //   groupId: 1,
+//   // };
+//   // const user2 = {
+//   //   firstName: 'Ivoa',
+//   //   lastName: 'Ivovycha',
+//   //   email: 'mail2@mail.com',
+//   //   birthday: '2002-09-21',
+//   //   isMale: false,
+//   //   activitiesCount: 0,
+//   //   groupId: 1,
+//   // };
+//   // const user3 = {
+//   //   firstName: 'Ivoa',
+//   //   lastName: 'Ivovycha',
+//   //   email: 'mail3@mail.com',
+//   //   birthday: '2002-09-21',
+//   //   isMale: false,
+//   //   activitiesCount: 0,
+//   //   groupId: 2,
+//   // };
+//   // const createdUser1 = await User.create(user1); // model instance
+//   // const createdUser2 = await User.create(user2); // model instance
+//   // const createdUser3 = await User.create(user3); // model instance
+
+//   // const usersWithGroups = await User.findAll({ include: Group, raw: true });
+
+//   // console.log(usersWithGroups);
+
+//   // const groupsWithUsers = await Group.findAll({ include: User, raw: true });
+//   // console.log(groupsWithUsers);
+
+//   // Eager Loading - LEFT JOIN
+//   // const usersWithGroups = await User.findAll({ include: Group, raw: true });
+//   // console.log(usersWithGroups);
+
+//   // // групу і дописати студентів, якщо вони є в групі
+//   // const groupWithUsers = await Group.findAll({
+//   //   where: { id: 1 },
+//   //   include: {
+//   //     model: User,
+//   //   },
+//   //   raw: true,
+//   // });
+//   // console.log(groupWithUsers);
+
+//   // Lazy Loading - hasMany? belongsTo, ,,,
+
+//   // const group1 = await Group.findByPk(1);
+//   // console.log(group1);
+
+//   // const usersInGr1 = await group1.getUsers({ raw: true });
+//   // console.log(usersInGr1);
+
+//   // User.belongsToMany(Group) - getGroup()
+//   // const user1 = await User.findByPk(1);
+
+//   // const groupByUser1 = await user1.getGroup({ raw: true });
+//   // console.log(groupByUser1);
+// })();
+
+// many-to-many
+
 (async function () {
-  // const group1 = { title: 'gr1', enteredAt: 2023 };
-  // const group2 = { title: 'gr2', enteredAt: 2024 };
-  // const createdGroup1 = await Group.create(group1); // model instance
-  // const createdGroup2 = await Group.create(group2);
-  // const user1 = {
-  //   firstName: 'Ivoa',
-  //   lastName: 'Ivovycha',
-  //   email: 'mail1@mail.com',
-  //   birthday: '2002-09-21',
-  //   isMale: false,
-  //   activitiesCount: 0,
-  //   groupId: 1,
-  // };
-  // const user2 = {
-  //   firstName: 'Ivoa',
-  //   lastName: 'Ivovycha',
-  //   email: 'mail2@mail.com',
-  //   birthday: '2002-09-21',
-  //   isMale: false,
-  //   activitiesCount: 0,
-  //   groupId: 1,
-  // };
-  // const user3 = {
-  //   firstName: 'Ivoa',
-  //   lastName: 'Ivovycha',
-  //   email: 'mail3@mail.com',
-  //   birthday: '2002-09-21',
-  //   isMale: false,
-  //   activitiesCount: 0,
-  //   groupId: 2,
-  // };
-  // const createdUser1 = await User.create(user1); // model instance
-  // const createdUser2 = await User.create(user2); // model instance
-  // const createdUser3 = await User.create(user3); // model instance
+  const subject1 = { title: 'Data Bases', hours: 100 };
+  const subject2 = { title: 'Web-programming', hours: 150 };
 
-  // const usersWithGroups = await User.findAll({ include: Group, raw: true });
+  const userSubj1 = { userId: 1, subjectId: 1, mark: 100 };
+  const userSubj2 = { userId: 1, subjectId: 2, mark: 90 };
+  const userSubj3 = { userId: 2, subjectId: 1, mark: 85 };
+  const userSubj4 = { userId: 2, subjectId: 2, mark: 88 };
 
-  // console.log(usersWithGroups);
+  // await Subject.create(subject1);
+  // await Subject.create(subject2);
+  // await StunentSubjects.create(userSubj1);
+  // await StunentSubjects.create(userSubj2);
+  // await StunentSubjects.create(userSubj3);
+  // await StunentSubjects.create(userSubj4);
 
-  // const groupsWithUsers = await Group.findAll({ include: User, raw: true });
-  // console.log(groupsWithUsers);
-
-  // Eager Loading - LEFT JOIN
-  // const usersWithGroups = await User.findAll({ include: Group, raw: true });
-  // console.log(usersWithGroups);
-
-  // // групу і дописати студентів, якщо вони є в групі
-  // const groupWithUsers = await Group.findAll({
-  //   where: { id: 1 },
-  //   include: {
-  //     model: User,
-  //   },
+  // Eager Loading
+  // const usersWithSubjects = await User.findAll({
+  //   include: Subject,
   //   raw: true,
   // });
-  // console.log(groupWithUsers);
 
-  // Lazy Loading - hasMany? belongsTo, ,,,
+  // console.log(usersWithSubjects);
 
-  // const group1 = await Group.findByPk(1);
-  // console.log(group1);
+  // const usersWithSubjects = await User.findAll({
+  //   include: [{ model: Subject }, { model: Group }],
+  //   raw: true,
+  // });
 
-  // const usersInGr1 = await group1.getUsers({ raw: true });
-  // console.log(usersInGr1);
+  // console.log(usersWithSubjects);
 
-  // User.belongsToMany(Group) - getGroup()
-  const user1 = await User.findByPk(1);
+  // Lazy Loading
 
-  const groupByUser1 = await user1.getGroup({ raw: true });
-  console.log(groupByUser1);
+  // const user1 = await User.findByPk(1);
+  // const subjOfUser1 = await user1.getSubjects({ raw: true });
+  // console.log(subjOfUser1);
+
+  // отримати студентів, які прослухали предмет 1
+
+  // const subj1 = await Subject.findByPk(1);
+  // const studentsOfSubject1 = await subj1.getUsers({ raw: true });
+  // console.log(studentsOfSubject1);
+
+  // отримати кількість студентів, які прослухали предмет 1
+
+  const subj1 = await Subject.findByPk(1);
+  const studentsOfSubject1 = await subj1.countUsers({ raw: true });
+  console.log(studentsOfSubject1);
 })();

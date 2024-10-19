@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'RESTRICT', // sync
       });
       User.belongsToMany(models.Subject, {
-        through: 'StudentSubjects',
+        through: 'StunentSubjects',
         foreignKey: 'userId',
       });
     }

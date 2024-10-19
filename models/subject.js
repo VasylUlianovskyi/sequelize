@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate (models) {
       Subject.belongsToMany(models.User, {
-        through: 'StunedtSibjects',
+        through: 'StunentSubjects',
         foreignKey: 'subjectId',
       });
     }
